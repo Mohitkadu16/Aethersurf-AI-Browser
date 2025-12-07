@@ -1,0 +1,14 @@
+{
+  "productName": "AetherSurf Browser",
+  "directories": {
+    "buildResources": "dist-web"
+  },
+  "files": [
+    "dist-web/**/*",
+    "electron/**/*"
+  ],
+  "win": {
+    "target": "portable"
+  },
+  "publish": null
+}

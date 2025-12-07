@@ -1,0 +1,11 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "shell",
+			"label": "Build and Run App",
+			"command": "npm i && npm run electron-build",
+			"group": "build"
+		}
+	]
+}

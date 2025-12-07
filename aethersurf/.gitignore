@@ -1,0 +1,59 @@
+.DS_Store
+node_modules
+.idea
+package-lock.json
+/build
+.vscode/
+.idea/
+vite.config.*s.*
+.env
+
+# Build and distribution files
+/dist
+/dist-web
+/release
+/releases
+*.exe
+*.dmg
+*.AppImage
+*.zip
+*.tar.gz
+
+# Electron builder files
+/out
+/dist_electron
+/release_electron
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Temporary files
+*.tmp
+.cache
+.parcel-cache
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Source map files (optional - comment out if you want to keep them)
+# *.map
