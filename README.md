@@ -1,2 +1,1 @@
-# Aethersurf AI Browser
 
