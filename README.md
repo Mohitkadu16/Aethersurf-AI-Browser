@@ -1,6 +1,8 @@
 
 # AetherSurf Web
 
+![View Badge](https://img.shields.io/badge/View-Live-green)
+
 A modern React-based web project utilizing the latest frontend technologies and tools for building responsive web applications. **Electron and desktop app support have been removed; this is now a pure web project.**
 
 ## 🚀 Features
@@ -101,8 +103,7 @@ npm run build
 
 ## 🙏 Acknowledgments
 
-- Built with [Rocket.new](https://rocket.new)
 - Powered by React and Vite
 - Styled with Tailwind CSS
 
-Built with ❤️ on Rocket.new
+Built with ❤️
