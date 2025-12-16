@@ -1,7 +1,7 @@
 
 # AetherSurf Web
 
-[![Repo views](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https://github.com/Mohitkadu16/AetherSurf-Browser&title=repo%20views)](https://github.com/Mohitkadu16/AetherSurf-Browser)
+[![Repo views](https://camo.githubusercontent.com/42cceda33f89fc38c0b0eb00b14add5eb79b1c1aaf30b8fd299451f13ce24659/68747470733a2f2f6b6f6d617265762e636f6d2f67687076632f3f757365726e616d653d4d6f6869746b6164753136267374796c653d666f722d7468652d626164676526636f6c6f723d626c7565)](https://github.com/Mohitkadu16/AetherSurf-Browser)
 
 A modern React-based web project utilizing the latest frontend technologies and tools for building responsive web applications. **Electron and desktop app support have been removed; this is now a pure web project.**
 
