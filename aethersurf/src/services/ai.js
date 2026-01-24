@@ -48,15 +48,16 @@ export async function getChatCompletion(userMessage, serviceType = AI_SERVICE.OP
  * @param {Function} onChunk - Callback for handling streamed chunks
  * @param {string} serviceType - The AI service to use
  * @param {string} model - The model to use (optional, for Ollama)
+ * @param {AbortSignal} signal - Optional abort signal for canceling the request
  */
-export async function getStreamingChatCompletion(userMessage, onChunk, serviceType = AI_SERVICE.OPENAI, model = null) {
+export async function getStreamingChatCompletion(userMessage, onChunk, serviceType = AI_SERVICE.OPENAI, model = null, signal = null) {
   const service = getService(serviceType);
   
   if (serviceType === AI_SERVICE.OLLAMA && model) {
-    return service.getStreamingChatCompletion(userMessage, onChunk, model);
+    return service.getStreamingChatCompletion(userMessage, onChunk, model, signal);
   }
   
-  return service.getStreamingChatCompletion(userMessage, onChunk);
+  return service.getStreamingChatCompletion(userMessage, onChunk, signal);
 }
 
 /**

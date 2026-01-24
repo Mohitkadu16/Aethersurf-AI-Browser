@@ -176,24 +176,45 @@ const SearchHistoryManagement = () => {
 
   // Action handlers
   const handleRerunSearch = (entry) => {
-    // Navigate to search interface with pre-filled query
-    navigate('/main-search-interface', { 
-      state: { 
-        query: entry.query, 
-        model: entry.model 
-      } 
-    });
+    // Store the query and model in localStorage for the search interface to pick up
+    localStorage.setItem('rerunSearch', JSON.stringify({
+      query: entry.query,
+      model: entry.model === 'OpenAI' ? 'openai' : 'ollama',
+      modelName: entry.modelName || entry.model
+    }));
+    
+    // Navigate to search interface
+    navigate('/main-search-interface');
   };
 
   const handleViewResults = (entry) => {
-    // Navigate to results display
-    navigate('/search-results-display', { 
-      state: { 
-        query: entry.query, 
-        model: entry.model,
-        fromHistory: true
-      } 
-    });
+    // Load the full search results from the entry
+    // The entry already contains the full response data from localStorage
+    if (entry.searchResults || entry.response) {
+      // Store the current search state for the results page
+      localStorage.setItem('currentSearch', JSON.stringify({
+        query: entry.query,
+        model: entry.model === 'OpenAI' ? 'openai' : 'ollama',
+        modelName: entry.modelName || entry.model,
+        timestamp: entry.timestamp,
+        response: entry.response || entry.originalResponse || '',
+        searchResults: entry.searchResults || {
+          steps: entry.steps || [{
+            title: "AI Response",
+            content: entry.response || entry.originalResponse || ''
+          }],
+          images: entry.images || [],
+          videos: entry.videos || []
+        }
+      }));
+      
+      // Navigate to results display
+      navigate('/search-results-display');
+    } else {
+      // If no cached results, show error or re-run the search
+      console.warn('No cached results found for this entry');
+      handleRerunSearch(entry);
+    }
   };
 
   const handleDeleteEntry = (id) => {

@@ -59,8 +59,9 @@ export async function getChatCompletion(userMessage, model = 'llama2') {
  * @param {string} userMessage - The user's input message.
  * @param {Function} onChunk - Callback to handle each streamed chunk.
  * @param {string} model - The Ollama model to use (e.g., 'llama2', 'mistral', etc.)
+ * @param {AbortSignal} signal - Optional abort signal for canceling the request.
  */
-export async function getStreamingChatCompletion(userMessage, onChunk, model = 'llama2') {
+export async function getStreamingChatCompletion(userMessage, onChunk, model = 'llama2', signal = null) {
   try {
     const response = await fetch(`${OLLAMA_BASE_URL}/api/generate`, {
       method: 'POST',
@@ -72,6 +73,7 @@ export async function getStreamingChatCompletion(userMessage, onChunk, model = '
         prompt: userMessage,
         stream: true,
       }),
+      signal: signal,
     });
 
     if (!response.ok) {
@@ -94,6 +96,10 @@ export async function getStreamingChatCompletion(userMessage, onChunk, model = '
       }
     }
   } catch (error) {
+    if (error.name === 'AbortError') {
+      console.log('Streaming was aborted by user');
+      throw new Error('Response generation stopped');
+    }
     console.error('Error in Ollama streaming chat:', error);
     throw new Error(error.message || 'Failed to stream response from Ollama');
   }

@@ -57,6 +57,24 @@ const SearchHistorySidebar = ({
 
   const handleHistoryClick = (item) => {
     if (onHistorySelect) {
+      // Store the search data in localStorage for the results page
+      localStorage.setItem('currentSearch', JSON.stringify({
+        query: item.query,
+        model: item.model === 'OpenAI' ? 'openai' : 'ollama',
+        modelName: item.modelName || item.model,
+        timestamp: item.timestamp,
+        response: item.response || item.originalResponse || '',
+        searchResults: item.searchResults || {
+          steps: item.steps || [{
+            title: "AI Response",
+            content: item.response || item.originalResponse || ''
+          }],
+          images: item.images || [],
+          videos: item.videos || []
+        }
+      }));
+      
+      // Call the original handler
       onHistorySelect(item);
     }
   };

@@ -37,8 +37,9 @@ export async function getChatCompletion(userMessage) {
  * Streams a chat completion response chunk by chunk.
  * @param {string} userMessage - The user's input message.
  * @param {Function} onChunk - Callback to handle each streamed chunk.
+ * @param {AbortSignal} signal - Optional abort signal for canceling the request.
  */
-export async function getStreamingChatCompletion(userMessage, onChunk) {
+export async function getStreamingChatCompletion(userMessage, onChunk, signal = null) {
   try {
     const stream = await openai.chat.completions.create({
       model: 'gpt-4',
@@ -49,7 +50,7 @@ export async function getStreamingChatCompletion(userMessage, onChunk) {
       stream: true,
       temperature: 0.7,
       max_tokens: 1000,
-    });
+    }, signal ? { signal } : {});
 
     let fullResponse = '';
     for await (const chunk of stream) {
@@ -61,6 +62,10 @@ export async function getStreamingChatCompletion(userMessage, onChunk) {
     }
     return fullResponse;
   } catch (error) {
+    if (error.name === 'AbortError') {
+      console.log('Streaming was aborted by user');
+      throw new Error('Response generation stopped');
+    }
     console.error('Error in streaming chat completion:', error);
     throw new Error(error.message || 'Failed to get streaming response from OpenAI');
   }

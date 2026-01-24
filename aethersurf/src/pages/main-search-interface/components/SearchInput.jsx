@@ -84,7 +84,6 @@ const SearchInput = ({
              }
             }}
            disabled={isLoading}
-           className="pr-16 border-2 border-gray-700" // Updated for darker border
           />
           
           <div className="absolute right-2 top-1/2 transform -translate-y-1/2">

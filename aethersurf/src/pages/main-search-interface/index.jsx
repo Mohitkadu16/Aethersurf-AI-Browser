@@ -243,10 +243,10 @@ const MainSearchInterface = () => {
               <div className="flex-1 flex flex-col items-center justify-center px-4">
                 {/* AI Name/Title */}
                 <div className="text-center mb-12">
-                  <h1 className="text-4xl font-bold text-text-primary mb-2">
+                  <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-2">
                     AetherSurf AI
                   </h1>
-                  <p className="text-lg text-text-secondary">
+                  <p className="text-lg text-gray-600 dark:text-gray-300">
                     How can I help you today?
                   </p>
                 </div>

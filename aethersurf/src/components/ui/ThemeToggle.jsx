@@ -11,14 +11,14 @@ const ThemeToggle = () => {
       onClick={toggleTheme}
       variant="outline"
       size="icon"
-      className={`
+      className="
         w-10 h-10 rounded-md
-        bg-background hover:bg-accent hover:text-accent-foreground
+        bg-white dark:bg-gray-800
+        hover:bg-gray-100 dark:hover:bg-gray-700
         transition-colors duration-300
-        border border-input
+        border border-gray-300 dark:border-gray-700
         flex items-center justify-center
-        ${theme === 'dark' ? 'dark:hover:bg-muted' : 'hover:bg-secondary'}
-      `}
+      "
       title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
     >
       {theme === 'dark' ? (
@@ -31,7 +31,7 @@ const ThemeToggle = () => {
         <Icon 
           name="Moon" 
           size={20} 
-          className="rotate-0 scale-100 transition-all duration-200 text-slate-700" 
+          className="rotate-0 scale-100 transition-all duration-200 text-gray-700 dark:text-gray-300" 
         />
       )}
     </Button>

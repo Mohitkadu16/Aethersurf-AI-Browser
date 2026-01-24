@@ -45,7 +45,7 @@ const ModelSelector = ({
   return (
     <div className={`inline-flex items-center ${className}`}>
       <div className="flex items-center space-x-3">
-        <span className="text-sm font-medium text-text-secondary">AI Model:</span>
+        <span className="text-sm font-medium text-gray-700 dark:text-gray-300">AI Model:</span>
         
         <div 
           className={`
