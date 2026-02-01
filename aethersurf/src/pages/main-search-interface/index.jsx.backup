@@ -48,6 +48,12 @@ const MainSearchInterface = () => {
   }, []);
 
   useEffect(() => {
+    // Load search history from localStorage
+    const savedHistory = localStorage.getItem('searchHistory');
+    if (savedHistory) {
+      setSearchHistory(JSON.parse(savedHistory));
+    }
+
     // Load selected models from localStorage
     const savedModel = localStorage.getItem('selectedModel');
     if (savedModel) {
@@ -156,6 +162,20 @@ const MainSearchInterface = () => {
         newHistoryItem.videos = searchResultsData.videos;
       }
       
+      const updatedHistory = [newHistoryItem, ...searchHistory].slice(0, 50);
+      setSearchHistory(updatedHistory);
+      localStorage.setItem('searchHistory', JSON.stringify(updatedHistory));
+      
+      // Store the current search state in localStorage
+      localStorage.setItem('currentSearch', JSON.stringify({
+        query,
+        model: selectedModel,
+        modelName: selectedModel === AI_SERVICE.OLLAMA ? selectedOllamaModel : 'OpenAI',
+        timestamp: startTime,
+        response: fullResponse,
+        searchResults: searchResultsData
+      }));
+
       // Navigate to results page
       navigate('/search-results-display');
       
@@ -195,13 +215,9 @@ const MainSearchInterface = () => {
     setIsMobileHistoryOpen(false);
   };
 
-  const handleClearHistory = async () => {
-    const allConvs = await conversationDB.getAllConversations();
-    for (const conv of allConvs) {
-      await conversationDB.deleteConversation(conv.id);
-    }
-    setConversations([]);
-    setCurrentConversation(null);
+  const handleClearHistory = () => {
+    setSearchHistory([]);
+    localStorage.removeItem('searchHistory');
   };
 
   const handleCloseResults = () => {
@@ -228,7 +244,7 @@ const MainSearchInterface = () => {
           isSidebarVisible ? 'w-80' : 'w-0'
         } overflow-hidden`}>
           <SearchHistorySidebar
-            searchHistory={conversations}
+            searchHistory={searchHistory}
             onHistorySelect={handleHistorySelect}
             onClearHistory={handleClearHistory}
             isVisible={isSidebarVisible}
@@ -277,7 +293,7 @@ const MainSearchInterface = () => {
                     <div className="w-full">
                       <SearchInput
                         onSearch={handleSearch}
-                        searchHistory={conversations}
+                        searchHistory={searchHistory}
                         isLoading={isLoading}
                         placeholder={`Ask ${selectedModel === AI_SERVICE.OLLAMA ? selectedOllamaModel || 'Ollama' : selectedModel} anything...`}
                         defaultQuery={query}
@@ -306,7 +322,7 @@ const MainSearchInterface = () => {
                       iconSize={16}
                       className="text-text-secondary lg:hidden"
                     >
-                      History ({conversations.length})
+                      History ({searchHistory.length})
                     </Button>
                     
                     <Button
@@ -357,7 +373,7 @@ const MainSearchInterface = () => {
       <MobileHistorySheet
         isOpen={isMobileHistoryOpen}
         onClose={() => setIsMobileHistoryOpen(false)}
-        searchHistory={conversations}
+        searchHistory={searchHistory}
         onHistorySelect={handleHistorySelect}
         onClearHistory={handleClearHistory}
       />
